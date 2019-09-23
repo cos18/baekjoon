@@ -46,7 +46,7 @@ int main(){
                 if(query[location]=='L') l++;
                 else b++;
                 location++;
-                if((query[location]!='(' && query[location]!='[') || query[location]==')' || query[location]==']'){
+                if(location>query.size()-3 || (query[location]!='(' && query[location]!='[') || query[location+1]==')' || query[location+1]==']'){
                     cout << -1;
                     return 0;
                 }
