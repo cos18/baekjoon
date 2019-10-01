@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int main(){
@@ -11,8 +12,13 @@ int main(){
         cin >> arr[i];
     }
     for(int i=0;i<N;i++){
+        cnt[i]=1;
         for(int j=0;j<i;j++){
-
+            if(arr[j]<arr[i] && cnt[j]+1>cnt[i]){
+                cnt[i] = cnt[j]+1;
+            }
         }
     }
+    sort(cnt, cnt+N);
+    cout << cnt[N-1];
 }
