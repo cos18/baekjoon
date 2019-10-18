@@ -26,6 +26,7 @@ int main(){
                 for(int j=1;j<10;j++) sum -= sudoku[i][j];
                 sudoku[i][linecheck] = sum;
                 check++;
+                zero--;
             }
         }
         for(int j=1;j<10;j++){
@@ -40,6 +41,7 @@ int main(){
                 for(int i=1;i<10;i++) sum -= sudoku[i][j];
                 sudoku[linecheck][j] = sum;
                 check++;
+                zero--;
             }
         }
         for(int k=0;k<3;k++){
@@ -59,15 +61,22 @@ int main(){
                     }
                     sudoku[linecheck/10][linecheck%10] = sum;
                     check++;
+                    zero--;
                 }
             }
         }
         if(!check) break;
     }
-    for(int i=1;i<10;i++){
-        for(int j=1;j<10;j++){
-            cout << sudoku[i][j] << " ";
+    if(zero==0){
+        for(int i=1;i<10;i++){
+            for(int j=1;j<10;j++){
+                cout << sudoku[i][j] << " ";
+            }
+            cout << "\n";
         }
-        cout << "\n";
+        return 0;
+    } else {
+
     }
+
 }

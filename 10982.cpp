@@ -10,7 +10,7 @@ int main(){
     int q;
     cin >> q;
     while(q--){
-        int n, a[100], b[100], sum=0, d[100010][2]={};
+        int n, a[1000], b[1000], sum=0, d[INF][2]={};
         cin >> n;
         for(int i=0;i<n;i++){
             cin >> a[i] >> b[i];
