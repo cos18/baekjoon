@@ -49,7 +49,7 @@ int locate(int cctv_cnt){
             redo = 1; break;
     }
     for(int i=0;i<redo;i++){
-        locate_cctvs.push_back(make_tuple(x, y, cctv+i));
+        locate_cctvs.emplace_back(x, y, cctv+i);
         int watch = locate(cctv_cnt+1);
         max = watch>max?watch:max;
         locate_cctvs.pop_back();
@@ -81,7 +81,7 @@ int main(){
                     map[i][j] = 16; break;
             }
             if(map[i][j]>0 && map[i][j]<16){
-                cctvs.push_back(make_tuple(i, j, map[i][j]));
+                cctvs.emplace_back(i, j, map[i][j]);
             }
         }
     }
