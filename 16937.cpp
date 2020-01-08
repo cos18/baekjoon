@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 int main(){
@@ -13,14 +14,20 @@ int main(){
     }
     int ans = 0;
     for(int i=0;i<N;i++){
-        int iRH = H-R[i], iCH = H-C[i], iRW = W-R[i], iCW = W-C[i];
+        int r1 = R[i], c1 = C[i];
         for(int j=i+1;j<N;j++){
-            if(((R[i]+R[j] <= H) && (C[i]+C[j] <= W)) || ((R[i]+C[j] <= H) && (C[i]+R[j] <= W)) || ((C[i]+R[j] <= H) && (R[i]+C[j] <= W)) || ((C[i]+C[j] <= H) && (R[i]+R[j] <= W))){
-                ans = (size[i]+size[j]>ans)?(size[i]+size[j]):ans;
-            } else if ((R[j]<=H && C[j]<=iCW) || (C[j]<=H && R[j]<=iCW) || (R[j]<=iRH && C[j]<=W) || (C[j]<=iRH && R[j]<=W)){
-                ans = (size[i]+size[j]>ans)?(size[i]+size[j]):ans;
-            } else if ((R[j]<=H && C[j]<=iRW) || (C[j]<=H && R[j]<=iRW) || (R[j]<=iCH && C[j]<=W) || (C[j]<=iCH && R[j]<=W)){
-                ans = (size[i]+size[j]>ans)?(size[i]+size[j]):ans;
+            int r2 = R[j], c2 = C[j];
+            for (int rot1=0; rot1<2; rot1++) {
+                for (int rot2=0; rot2<2; rot2++) {
+                    if (r1+r2 <= H && max(c1,c2) <= W) {
+                        ans = max(ans, size[i]+size[j]);
+                    }
+                    if (max(r1,r2) <= H && c1+c2 <= W) {
+                        ans = max(ans, size[i]+size[j]);
+                    }
+                    swap(r2, c2);
+                }
+                swap(r1, c1);
             }
         }
     }
