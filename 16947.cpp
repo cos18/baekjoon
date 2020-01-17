@@ -1,35 +1,65 @@
 #include <iostream>
+#include <queue>
 #include <vector>
-
 using namespace std;
-
-int N;
-
-vector<bool> is_cycle(3001);
-
-bool check_cycle(int locate, vector<bool> cycle){
-
-}
-
-int main(){
-    ios_base :: sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
-    vector<int> path[3001];
-    cin >> N;
-    for(int i=0;i<N;i++){
-        int a, b;
-        cin >> a >> b;
-        path[a].push_back(b);
-        path[b].push_back(a);
+vector<int> a[3000];
+int check[3000], dist[3000];
+int go(int x, int p) {
+    if (check[x] == 1) {
+        return x;
     }
-    int check = 1;
-    while(check<=N){
-        vector<bool> tmp_cycle(3001);
-        if(check_cycle(check, tmp_cycle)){
-            is_cycle = tmp_cycle;
-            break;
+    check[x] = 1;
+    for (int y : a[x]) {
+        if (y == p) continue;
+        int res = go(y, x);
+        if (res == -2) return -2;
+        if (res >= 0) {
+            check[x] = 2;
+            if (x == res) return -2;
+            else return res;
         }
-        check++;
     }
+    return -1;
 }
+int main() {
+    int n;
+    cin >> n;
+    for (int i=0; i<n; i++) {
+        int u, v;
+        cin >> u >> v;
+        u -= 1;
+        v -= 1;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+
+    go(0, -1);
+    queue<int> q;
+    for (int i=0; i<n; i++) {
+        if (check[i] == 2) {
+            dist[i] = 0;
+            q.push(i);
+        } else {
+            dist[i] = -1;
+        }
+    }
+
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int y : a[x]) {
+            if (dist[y] == -1) {
+                q.push(y);
+                dist[y] = dist[x]+1;
+            }
+        }
+    }
+
+    for (int i=0; i<n; i++) {
+        cout << dist[i] << ' ';
+    }
+    cout << '\n';
+    return 0;
+}
+
+
